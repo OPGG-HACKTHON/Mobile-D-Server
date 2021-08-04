@@ -1,8 +1,11 @@
 package opgg.mobiled.joinus.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import opgg.mobiled.joinus.service.LoginService;
@@ -15,99 +18,84 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 @Service
 public class LoginServiceImpl implements LoginService{
     private LoginDao loginDao;
 
+    @Value("${oauth.clientid}")
+    String client_id;
+
+    @Value("${oauth.clientpassword}")
+    String client_password;
+
+    @Value("${oauth.redirecturi}")
+    String redirect_uri;
+
     @Autowired
     public LoginServiceImpl(LoginDao loginDao) {
         this.loginDao = loginDao;
     }
 
-    public static String postRequest(String token) {
-        HashMap< String, String > pList = new HashMap<>();
-        String myResult = "";
+    public String postRequestWithToken(String token) throws IOException {
+        String result_post = "";
 
-        try {
-            //   URL 설정하고 접속하기
-            URL url = new URL("https://oauth2.googleapis.com/token"); // URL 설정
+        URL url = new URL ("https://oauth2.googleapis.com/token");
+        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/json; utf-8");
+        con.setRequestProperty("Accept", "application/json");
+        con.setDoOutput(true);
 
-            HttpURLConnection http = (HttpURLConnection) url.openConnection(); // 접속
-            //--------------------------
-            //   전송 모드 설정 - 기본적인 설정
-            //--------------------------
-            http.setDefaultUseCaches(false);
-            http.setDoInput(true); // 서버에서 읽기 모드 지정
-            http.setDoOutput(true); // 서버로 쓰기 모드 지정
-            http.setRequestMethod("POST"); // 전송 방식은 POST
-
-
-
-            //--------------------------
-            // 헤더 세팅
-            //--------------------------
-            // 서버에게 웹에서 <Form>으로 값이 넘어온 것과 같은 방식으로 처리하라는 걸 알려준다
-            http.setRequestProperty("content-type", "application/x-www-form-urlencoded");
-
-
-            //--------------------------
-            //   서버로 값 전송
-            //--------------------------
-            StringBuffer buffer = new StringBuffer();
-            pList.put("code",token);
-            pList.put("client_id","");
-            pList.put("client_secret","");
-            pList.put("redirect_uri","http://localhost:8080/api/login/");
-            pList.put("grant_type","");
-            //HashMap으로 전달받은 파라미터가 null이 아닌경우 버퍼에 넣어준다
-            if (pList != null) {
-
-                Set key = pList.keySet();
-
-                for (Iterator iterator = key.iterator(); iterator.hasNext();) {
-                    String keyName = (String) iterator.next();
-                    String valueName = pList.get(keyName);
-                    buffer.append(keyName).append("=").append(valueName);
-                }
-            }
-
-            OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
-            PrintWriter writer = new PrintWriter(outStream);
-            writer.write(buffer.toString());
-            writer.flush();
-
-
-            //--------------------------
-            //   Response Code
-            //--------------------------
-            //http.getResponseCode();
-
-
-            //--------------------------
-            //   서버에서 전송받기
-            //--------------------------
-            InputStreamReader tmp = new InputStreamReader(http.getInputStream(), "UTF-8");
-            BufferedReader reader = new BufferedReader(tmp);
-            StringBuilder builder = new StringBuilder();
-            String str;
-            while ((str = reader.readLine()) != null) {
-                builder.append(str + "\n");
-            }
-            myResult = builder.toString();
-            return myResult;
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        String jsonInputString = "{'code': '" + token + "', 'client_id': '" + this.client_id + "','client_secret':'" + this.client_password +"','redirect_uri':'" + this.redirect_uri + "','grant_type':'authorization_code'}";
+        try(OutputStream os = con.getOutputStream()) {
+            byte[] input = jsonInputString.getBytes("utf-8");
+            os.write(input, 0, input.length);
         }
-        return myResult;
+        try(BufferedReader br = new BufferedReader(
+                new InputStreamReader(con.getInputStream(), "utf-8"))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            result_post = response.toString();
+        }
+        return result_post;
+    }
+
+    public static String getRequestWithAccessToken(String token) throws IOException {
+        StringBuilder result = new StringBuilder();
+        URL url = new URL("https://www.googleapis.com/oauth2/v3/userinfo?access_token="+token);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(conn.getInputStream()))) {
+            for (String line; (line = reader.readLine()) != null; ) {
+                result.append(line);
+            }
+        }
+        return result.toString();
+    }
+
+    public static Map<String,Object> convertJSONstringToMap(String json) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map = mapper.readValue(json, new TypeReference<Map<String, Object>>() {});
+
+        return map;
     }
 
     @Override
     public int OAuthCheck(String token) {
         try {
-            postRequest(token);
+            String access_token_data = postRequestWithToken(token);
+            System.out.println(access_token_data);
+            String user_data = getRequestWithAccessToken((String) convertJSONstringToMap(access_token_data).get("access_token"));
+            System.out.println(user_data);
         } catch (Exception e) {
             System.out.println(e);
         }
