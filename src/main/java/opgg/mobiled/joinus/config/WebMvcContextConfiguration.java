@@ -45,6 +45,7 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
     @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
         // html 파일을 추가하게 된다면 여기서 주소를 엮을 수 있다 ex)registry.addViewController("/").setViewName("main");
+        registry.addViewController("/").setViewName("main");
     }
 
     @Bean

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button id="oauth">Google</button>
+</body>
+<script>
+    document.querySelector("#oauth").addEventListener("click",() => {
+        location.href = "https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code&client_id=139499651998-5mhlkgtpjgmlfbu4evd6i6a7oarrisdu.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/login/"
+    })
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    const url = window.location.search;
+    console.log(url);
+    const token = getParameterByName("code");
+    console.log(token);
+
+    function postData(url = '', data = {}) {
+        // Default options are marked with *
+        return fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                 'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(data), // body data type must match "Content-Type" header
+        })
+        .then(response => {
+            console.log(response);
+            response.json()
+        }); // parses JSON response into native JavaScript objects
+    }
+
+    postData('http://localhost:8080/api/login', {token: token})
+    .then(data => console.log(data))
+</script>
+</html>
