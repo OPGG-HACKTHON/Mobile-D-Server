@@ -1,5 +1,7 @@
 package opgg.mobiled.joinus.service;
 
+import opgg.mobiled.joinus.dto.User;
+
 public interface LoginService {
-    public int OAuthCheck(String token);
+    public User OAuthCheck(String token);
 }

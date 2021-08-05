@@ -2,8 +2,8 @@ package opgg.mobiled.joinus.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
+import opgg.mobiled.joinus.dto.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class LoginServiceImpl implements LoginService{
@@ -90,15 +87,28 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public int OAuthCheck(String token) {
+    public User OAuthCheck(String token) {
+        User user = null;
         try {
             String access_token_data = postRequestWithToken(token);
-            System.out.println(access_token_data);
             String user_data = getRequestWithAccessToken((String) convertJSONstringToMap(access_token_data).get("access_token"));
-            System.out.println(user_data);
+            String login_token = (String) convertJSONstringToMap(user_data).get("sub");
+            // 로그인 시도
+            try {
+                user = LoginDao.Login(login_token);
+                return user;
+                
+            // 로그인 시도 후 해당 값이 없다 == 비회원 유저이다.
+            // 가입 시키고 로그인 시킴
+            // 세션처리는 추후에 해야할 듯
+            } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+                int pk = LoginDao.SignupWithOnlyToken(login_token);
+                user = LoginDao.Login(login_token);
+                return user;
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return 1;
+        return user;
     }
 }

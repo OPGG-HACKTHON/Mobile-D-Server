@@ -1,5 +1,6 @@
 package opgg.mobiled.joinus.controller;
 
+import opgg.mobiled.joinus.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,8 @@ public class LoginController {
     public LoginController(LoginService loginService) { this.loginService = loginService; }
 
     @GetMapping
-    public int OAuthCheck(@RequestParam String code) {
-        loginService.OAuthCheck(code);
-        return 1;
+    public User OAuthCheck(@RequestParam String code) {
+        User user = loginService.OAuthCheck(code);
+        return user;
     }
 }
