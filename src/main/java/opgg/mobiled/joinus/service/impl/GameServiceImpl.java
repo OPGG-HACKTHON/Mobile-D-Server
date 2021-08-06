@@ -20,8 +20,8 @@ public class GameServiceImpl implements GameService {
     }
     
     @Override
-    public List<Game> selectGame() {
-        List<Game> game = gameDao.selectGame();
+    public List<Game> selectGame(int user_pk) {
+        List<Game> game = gameDao.selectGame(user_pk);
         return game;
     }
 }

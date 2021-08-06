@@ -31,8 +31,8 @@ public class GameController {
     }
 
     @GetMapping
-    public List<Game> selectGameDetail() {
-        List<Game> resultGame = gameService.selectGame();
+    public List<Game> selectGameListWithUserPk(@RequestParam int user_pk) {
+        List<Game> resultGame = gameService.selectGame(user_pk);
 
         return resultGame;
     }

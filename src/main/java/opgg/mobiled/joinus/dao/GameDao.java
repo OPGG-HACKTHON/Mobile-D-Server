@@ -28,8 +28,9 @@ public class GameDao {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<Game> selectGame() {
+    public List<Game> selectGame(int user_pk) {
         Map<String, Integer> params = new HashMap<>();
+        params.put("user_pk",user_pk);
         return jdbc.query(GameDaoSqls.SELECT_GAME,params,gameRowMapper);
     }
 }

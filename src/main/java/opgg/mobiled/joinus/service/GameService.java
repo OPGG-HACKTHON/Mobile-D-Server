@@ -5,5 +5,5 @@ import opgg.mobiled.joinus.dto.Game;
 import java.util.List;
 
 public interface GameService {
-    public List<Game> selectGame();
+    public List<Game> selectGame(int user_pk);
 }

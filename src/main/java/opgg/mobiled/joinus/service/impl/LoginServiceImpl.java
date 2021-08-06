@@ -97,7 +97,7 @@ public class LoginServiceImpl implements LoginService{
             try {
                 user = LoginDao.Login(login_token);
                 return user;
-                
+
             // 로그인 시도 후 해당 값이 없다 == 비회원 유저이다.
             // 가입 시키고 로그인 시킴
             // 세션처리는 추후에 해야할 듯
