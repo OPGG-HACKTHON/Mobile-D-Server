@@ -47,4 +47,10 @@ public class GameDao {
         jdbc.update(GameDaoSqls.UPDATE_GAME_WITH_GAME_DATA,sqlParameterSource,keyHolder);
         return keyHolder.getKey().intValue();
     }
+
+    public int deleteGameDataWithGamePk(int game_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("pk",game_pk);
+        return jdbc.update(GameDaoSqls.DELETE_GAME_WITH_GAME_PK,params);
+    }
 }

@@ -44,5 +44,10 @@ public class GameController {
         return updateResult;
     }
 
-    
+    @DeleteMapping
+    public int deleteGameDataWithGamePk(@RequestParam int game_pk) {
+        int deleteResult = gameService.deleteGameDataWithGamePk(game_pk);
+
+        return deleteResult;
+    }
 }

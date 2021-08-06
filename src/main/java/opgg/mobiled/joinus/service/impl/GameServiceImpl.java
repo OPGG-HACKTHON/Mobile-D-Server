@@ -38,4 +38,11 @@ public class GameServiceImpl implements GameService {
 
         return resultUpdate;
     }
+
+    @Override
+    public int deleteGameDataWithGamePk(int game_pk) {
+        int resultDelete = gameDao.deleteGameDataWithGamePk(game_pk);
+
+        return resultDelete;
+    }
 }

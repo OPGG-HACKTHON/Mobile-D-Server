@@ -8,4 +8,5 @@ public interface GameService {
     public List<Game> selectGame(int user_pk);
     public int insertGameListWithUserPkAndGameInformation(Game game_data);
     public int updateGameDataWithGameData(Game game_data);
+    public int deleteGameDataWithGamePk(int game_pk);
 }
