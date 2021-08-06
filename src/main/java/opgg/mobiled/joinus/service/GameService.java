@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GameService {
     public List<Game> selectGame(int user_pk);
+    public int insertGameListWithUserPkAndGameInformation(Game game_data);
 }

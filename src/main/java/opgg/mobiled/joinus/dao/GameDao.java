@@ -31,6 +31,13 @@ public class GameDao {
     public List<Game> selectGame(int user_pk) {
         Map<String, Integer> params = new HashMap<>();
         params.put("user_pk",user_pk);
-        return jdbc.query(GameDaoSqls.SELECT_GAME,params,gameRowMapper);
+        return jdbc.query(GameDaoSqls.SELECT_GAME_WITH_USER_PK,params,gameRowMapper);
+    }
+
+    public int insertGameListWithUserPkAndGameInformation(Game game_data) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(game_data);
+        jdbc.update(GameDaoSqls.INSERT_GAME_WITH_USER_PK_AND_GAME_DATA,sqlParameterSource,keyHolder);
+        return keyHolder.getKey().intValue();
     }
 }

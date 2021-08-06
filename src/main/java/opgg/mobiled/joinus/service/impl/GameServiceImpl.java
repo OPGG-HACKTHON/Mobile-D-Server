@@ -24,4 +24,11 @@ public class GameServiceImpl implements GameService {
         List<Game> game = gameDao.selectGame(user_pk);
         return game;
     }
+
+    @Override
+    public int insertGameListWithUserPkAndGameInformation(Game game_data) {
+        int resultInsert = gameDao.insertGameListWithUserPkAndGameInformation(game_data);
+
+        return  resultInsert;
+    }
 }

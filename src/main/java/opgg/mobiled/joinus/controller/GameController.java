@@ -36,4 +36,11 @@ public class GameController {
 
         return resultGame;
     }
+
+    @PostMapping
+    public  int insertGameListWithUserPkAndGameInformation(@RequestBody Game game_data) {
+        int insertResult = gameService.insertGameListWithUserPkAndGameInformation(game_data);
+
+        return insertResult;
+    }
 }
