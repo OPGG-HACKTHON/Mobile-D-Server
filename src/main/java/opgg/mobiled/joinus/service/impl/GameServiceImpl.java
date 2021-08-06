@@ -31,4 +31,11 @@ public class GameServiceImpl implements GameService {
 
         return  resultInsert;
     }
+
+    @Override
+    public int updateGameDataWithGameData(Game game_data) {
+        int resultUpdate = gameDao.updateGameDataWithGameData(game_data);
+
+        return resultUpdate;
+    }
 }

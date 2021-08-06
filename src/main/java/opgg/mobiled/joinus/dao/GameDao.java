@@ -40,4 +40,11 @@ public class GameDao {
         jdbc.update(GameDaoSqls.INSERT_GAME_WITH_USER_PK_AND_GAME_DATA,sqlParameterSource,keyHolder);
         return keyHolder.getKey().intValue();
     }
+
+    public int updateGameDataWithGameData(Game game_data) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(game_data);
+        jdbc.update(GameDaoSqls.UPDATE_GAME_WITH_GAME_DATA,sqlParameterSource,keyHolder);
+        return keyHolder.getKey().intValue();
+    }
 }

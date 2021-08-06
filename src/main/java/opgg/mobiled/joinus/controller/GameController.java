@@ -1,14 +1,7 @@
 package opgg.mobiled.joinus.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.RequestBody;
 
 // 위는 거의 기본적으로 들어가는 rest backend를 위한 패키지
 // 이 아래에는 필요한 dto, service, 기타 쿠키나 세션관련된 패키지를 임포트 할 것
@@ -38,9 +31,18 @@ public class GameController {
     }
 
     @PostMapping
-    public  int insertGameListWithUserPkAndGameInformation(@RequestBody Game game_data) {
+    public int insertGameListWithUserPkAndGameInformation(@RequestBody Game game_data) {
         int insertResult = gameService.insertGameListWithUserPkAndGameInformation(game_data);
 
         return insertResult;
     }
+
+    @PutMapping
+    public int updateGameDataWithGameData(@RequestBody Game game_data) {
+        int updateResult = gameService.updateGameDataWithGameData(game_data);
+
+        return updateResult;
+    }
+
+    
 }
