@@ -1,5 +1,6 @@
 package opgg.mobiled.joinus.controller;
 
+import opgg.mobiled.joinus.dto.RoomAndRoomUserVO;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,5 +26,12 @@ public class RoomController {
         List<Room> resultRoomList = roomService.selectAllRoom();
 
         return resultRoomList;
+    }
+
+    @PostMapping
+    public int insertRoomAndRoomUserWithRoomDataAndUserPk(@RequestBody RoomAndRoomUserVO roomAndRoomUserVO) {
+        int resultRoomPk = roomService.insertRoomAndRoomUserWithRoomDataAndUserPk(roomAndRoomUserVO);
+
+        return resultRoomPk;
     }
 }

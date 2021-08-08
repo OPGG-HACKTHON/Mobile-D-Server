@@ -1,5 +1,6 @@
 package opgg.mobiled.joinus.service.impl;
 
+import opgg.mobiled.joinus.dto.RoomAndRoomUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,12 @@ public class RoomServiceImpl implements RoomService{
         List<Room> resultRoomList = roomDao.selectAllRoom();
 
         return resultRoomList;
+    }
+
+    @Override
+    public int insertRoomAndRoomUserWithRoomDataAndUserPk(RoomAndRoomUserVO roomAndRoomUserVO) {
+        int resultRoomPk = roomDao.insertRoomWithRoomData(roomAndRoomUserVO);
+        int resultRoomUserPk = roomDao.insertRoomUserWithRoomPkAndUserPk(resultRoomPk,roomAndRoomUserVO.getUser_pk(),1);
+        return resultRoomPk;
     }
 }
