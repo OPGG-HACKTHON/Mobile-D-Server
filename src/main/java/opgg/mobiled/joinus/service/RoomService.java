@@ -9,4 +9,5 @@ public interface RoomService {
     public List<Room> selectAllRoom();
     public int insertRoomAndRoomUserWithRoomDataAndUserPk(RoomAndRoomUserVO roomAndRoomUserVO);
     public int updateRoomWithRoomData(Room room);
+    public int deleteRoomWithRoomPk(int room_pk);
 }

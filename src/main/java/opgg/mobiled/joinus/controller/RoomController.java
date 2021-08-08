@@ -41,4 +41,11 @@ public class RoomController {
 
         return updateResult;
     }
+
+    @DeleteMapping
+    public int deleteRoomWithRoomPk(@RequestParam int room_pk) {
+        int deleteResult = roomService.deleteRoomWithRoomPk(room_pk);
+
+        return deleteResult;
+    }
 }

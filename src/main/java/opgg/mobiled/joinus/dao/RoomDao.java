@@ -49,4 +49,10 @@ public class RoomDao {
         jdbc.update(RoomDaoSqls.UPDATE_ROOM_DATA_WITH_ROOM_PK,sqlParameterSource,keyHolder);
         return keyHolder.getKey().intValue();
     }
+
+    public static int deleteRoomWithRoomPk(int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("pk",room_pk);
+        return jdbc.update(RoomDaoSqls.DELETE_ROOM_WITH_ROOM_PK,params);
+    }
 }
