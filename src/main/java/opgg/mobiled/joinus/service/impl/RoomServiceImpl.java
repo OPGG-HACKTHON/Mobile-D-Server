@@ -44,4 +44,11 @@ public class RoomServiceImpl implements RoomService{
 
         return resultDelete;
     }
+
+    @Override
+    public Room selectRoomDetailWithRoomPk(int room_pk) {
+        Room resultRoom = roomDao.selectRoomDetailWithRoomPk(room_pk);
+
+        return resultRoom;
+    }
 }

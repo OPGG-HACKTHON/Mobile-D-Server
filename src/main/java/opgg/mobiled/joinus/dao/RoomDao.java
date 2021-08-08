@@ -55,4 +55,10 @@ public class RoomDao {
         params.put("pk",room_pk);
         return jdbc.update(RoomDaoSqls.DELETE_ROOM_WITH_ROOM_PK,params);
     }
+
+    public static Room selectRoomDetailWithRoomPk(int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("pk",room_pk);
+        return jdbc.queryForObject(RoomDaoSqls.SELECT_ROOM_DETAIL_WITH_ROOM_PK,params,roomRowMapper);
+    }
 }

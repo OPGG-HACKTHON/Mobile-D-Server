@@ -48,4 +48,11 @@ public class RoomController {
 
         return deleteResult;
     }
+
+    @GetMapping(path = "/{room_pk}")
+    public Room selectRoomDetailWithRoomPk(@PathVariable(name = "room_pk") int room_pk) {
+        Room resultRoom = roomService.selectRoomDetailWithRoomPk(room_pk);
+
+        return resultRoom;
+    }
 }
