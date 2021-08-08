@@ -42,4 +42,11 @@ public class RoomDao {
         params.put("is_leader",is_leader);
         return jdbc.update(RoomDaoSqls.INSERT_ROOM_USER_WITH_ROOM_PK_AND_USER_PK,params);
     }
+
+    public static int updateRoomWithRoomData(Room room) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(room);
+        jdbc.update(RoomDaoSqls.UPDATE_ROOM_DATA_WITH_ROOM_PK,sqlParameterSource,keyHolder);
+        return keyHolder.getKey().intValue();
+    }
 }

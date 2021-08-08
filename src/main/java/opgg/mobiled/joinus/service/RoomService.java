@@ -8,4 +8,5 @@ import java.util.List;
 public interface RoomService {
     public List<Room> selectAllRoom();
     public int insertRoomAndRoomUserWithRoomDataAndUserPk(RoomAndRoomUserVO roomAndRoomUserVO);
+    public int updateRoomWithRoomData(Room room);
 }

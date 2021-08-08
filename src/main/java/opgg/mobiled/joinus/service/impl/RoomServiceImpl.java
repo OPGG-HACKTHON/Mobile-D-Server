@@ -30,4 +30,11 @@ public class RoomServiceImpl implements RoomService{
         int resultRoomUserPk = roomDao.insertRoomUserWithRoomPkAndUserPk(resultRoomPk,roomAndRoomUserVO.getUser_pk(),1);
         return resultRoomPk;
     }
+
+    @Override
+    public int updateRoomWithRoomData(Room room) {
+        int resultUpdate = roomDao.updateRoomWithRoomData(room);
+
+        return resultUpdate;
+    }
 }

@@ -34,4 +34,11 @@ public class RoomController {
 
         return resultRoomPk;
     }
+
+    @PutMapping
+    public int updateRoomWithRoomData(@RequestBody Room room) {
+        int updateResult = roomService.updateRoomWithRoomData(room);
+
+        return updateResult;
+    }
 }
