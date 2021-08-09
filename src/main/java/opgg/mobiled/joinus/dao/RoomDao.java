@@ -35,14 +35,6 @@ public class RoomDao {
         return keyHolder.getKey().intValue();
     }
 
-    public static int insertRoomUserWithRoomPkAndUserPk(int room_pk, int user_pk, int is_leader) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("room_pk",room_pk);
-        params.put("user_pk",user_pk);
-        params.put("is_leader",is_leader);
-        return jdbc.update(RoomDaoSqls.INSERT_ROOM_USER_WITH_ROOM_PK_AND_USER_PK,params);
-    }
-
     public static int updateRoomWithRoomData(Room room) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(room);
