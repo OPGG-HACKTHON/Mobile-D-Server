@@ -31,4 +31,10 @@ public class RoomUserServiceImpl implements RoomUserService {
         int resultInsert = roomUserDao.insertRoomUserWithRoomPkAndUserPk(room_pk,user_pk,0);
         return resultInsert;
     }
+
+    @Override
+    public int deleteUserInRoomWithRoomUserPk(int room_user_pk) {
+        int resultDelete = roomUserDao.deleteUserInRoomWithRoomUserPk(room_user_pk);
+        return resultDelete;
+    }
 }

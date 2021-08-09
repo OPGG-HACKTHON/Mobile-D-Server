@@ -5,4 +5,5 @@ public class RoomUserDaoSqls {
             + " VALUES (:user_pk, :room_pk, :is_leader)";
     public static final String SELECT_ALL_USER_IN_ROOM_WITH_ROOM_PK = "SELECT user_pk FROM roomuser WHERE room_pk = :room_pk";
     public static final String SELECT_USER_DETAIL_WITH_USER_PK = "SELECT * FROM user WHERE pk = :user_pk";
+    public static final String DELETE_ROOM_USER_WITH_ROOM_USER_PK = "DELETE FROM ROOMUSER WHERE pk = :pk";
 }

@@ -39,4 +39,10 @@ public class RoomUserDao {
         params.put("user_pk",user_pk);
         return jdbc.queryForObject(RoomUserDaoSqls.SELECT_USER_DETAIL_WITH_USER_PK,params,userRowMapper);
     }
+
+    public int deleteUserInRoomWithRoomUserPk(int room_user_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("pk",room_user_pk);
+        return jdbc.update(RoomUserDaoSqls.DELETE_ROOM_USER_WITH_ROOM_USER_PK,params);
+    }
 }

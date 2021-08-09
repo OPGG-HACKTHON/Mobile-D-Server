@@ -31,4 +31,10 @@ public class RoomUserController {
         int resultInsert = roomUserService.insertUserInRoomWithRoomPkAndUserPk(room_pk,user_pk);
         return resultInsert;
     }
+
+    @DeleteMapping
+    public int deleteUserInRoomWithRoomUserPk(@RequestParam int room_user_pk) {
+        int resultDelete = roomUserService.deleteUserInRoomWithRoomUserPk(room_user_pk);
+        return resultDelete;
+    }
 }
