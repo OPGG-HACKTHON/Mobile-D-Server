@@ -21,8 +21,14 @@ public class RoomUserController {
     public RoomUserController(RoomUserService roomUserService) {this.roomUserService = roomUserService;}
 
     @GetMapping
-    public List<User> selectAllUserInRoomWithRooPk(@RequestParam int room_pk) {
+    public List<User> selectAllUserInRoomWithRoomPk(@RequestParam int room_pk) {
         List<User> resultUserList = roomUserService.selectAllUserInRoomWithRooPk(room_pk);
         return resultUserList;
+    }
+
+    @PostMapping
+    public int insertUserInRoomWithRoomPkAndUserPk(@RequestParam int room_pk, @RequestParam int user_pk) {
+        int resultInsert = roomUserService.insertUserInRoomWithRoomPkAndUserPk(room_pk,user_pk);
+        return resultInsert;
     }
 }
