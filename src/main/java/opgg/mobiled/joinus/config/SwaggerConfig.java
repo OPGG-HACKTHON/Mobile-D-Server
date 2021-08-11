@@ -25,9 +25,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Practice Swagger")
-                .description("practice swagger config")
-                .version("1.0")
+                .title("OPGG mobiled JOINUS")
+                .description("backend api document")
+                .version("0.5")
                 .build();
     }
 }

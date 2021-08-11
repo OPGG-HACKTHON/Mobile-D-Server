@@ -1,5 +1,6 @@
 package opgg.mobiled.joinus.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +25,7 @@ public class GameController {
     }
 
     @GetMapping
-    public List<Game> selectGameListWithUserPk(@RequestParam int user_pk) {
+    public List<Game> selectGameListWithUserPk(@Parameter(description = "유저 pk 값", required = true, example = "4") @RequestParam int user_pk) {
         List<Game> resultGame = gameService.selectGame(user_pk);
 
         return resultGame;
