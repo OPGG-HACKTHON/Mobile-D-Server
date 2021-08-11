@@ -1,9 +1,13 @@
 package opgg.mobiled.joinus.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
+@Getter
+@Setter
 public class RoomAndRoomUserVO {
     private String room_name;
     private String game_name;
@@ -16,68 +20,4 @@ public class RoomAndRoomUserVO {
     private int highest_tier;
 
     private int user_pk;
-
-    public String getRoom_name() {
-        return room_name;
-    }
-
-    public void setRoom_name(String room_name) {
-        this.room_name = room_name;
-    }
-
-    public String getGame_name() {
-        return game_name;
-    }
-
-    public void setGame_name(String game_name) {
-        this.game_name = game_name;
-    }
-
-    public int getPeople_number() {
-        return people_number;
-    }
-
-    public void setPeople_number(int people_number) {
-        this.people_number = people_number;
-    }
-
-    public Timestamp getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Timestamp start_date) {
-        this.start_date = start_date;
-    }
-
-    public boolean isVoice_chat() {
-        return voice_chat;
-    }
-
-    public void setVoice_chat(boolean voice_chat) {
-        this.voice_chat = voice_chat;
-    }
-
-    public int getLowest_tier() {
-        return lowest_tier;
-    }
-
-    public void setLowest_tier(int lowest_tier) {
-        this.lowest_tier = lowest_tier;
-    }
-
-    public int getHighest_tier() {
-        return highest_tier;
-    }
-
-    public void setHighest_tier(int highest_tier) {
-        this.highest_tier = highest_tier;
-    }
-
-    public int getUser_pk() {
-        return user_pk;
-    }
-
-    public void setUser_pk(int user_pk) {
-        this.user_pk = user_pk;
-    }
 }
