@@ -27,7 +27,7 @@ public class MannerServiceImpl implements MannerService {
     @Override
     public int selectAndCalculateManner(int target_pk) {
         List<Manner> manners = mannerDao.selectManner(target_pk);
-        //매너도 계산 로직 전개
+        //TODO : 매너도 계산 로직 전개
 
         int resultManner = 0;
         for (Manner m : manners) {

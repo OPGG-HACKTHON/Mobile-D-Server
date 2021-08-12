@@ -31,12 +31,4 @@ public class MannerController {
         int mannerResult = mannerService.selectAndCalculateManner(target_pk);
         return mannerResult;
     }
-
-
-//    @GetMapping
-//    public List<Game> selectGameListWithUserPk(@Parameter(description = "유저 pk 값", required = true, example = "4") @RequestParam int user_pk) {
-//        List<Game> resultGame = gameService.selectGame(user_pk);
-//
-//        return resultGame;
-//    }
 }

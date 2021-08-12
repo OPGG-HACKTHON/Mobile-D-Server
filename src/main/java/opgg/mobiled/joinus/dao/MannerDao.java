@@ -36,10 +36,4 @@ public class MannerDao {
         params.put("target_pk",target_pk);
         return jdbc.query(MannerDaoSqls.SELECT_MANNER_WITH_TARGET_PK, params, mannerRowMapper);
     }
-
-//    public List<Game> selectGame(int user_pk) {
-//        Map<String, Integer> params = new HashMap<>();
-//        params.put("user_pk",user_pk);
-//        return jdbc.query(GameDaoSqls.SELECT_GAME_WITH_USER_PK,params,gameRowMapper);
-//    }
 }
