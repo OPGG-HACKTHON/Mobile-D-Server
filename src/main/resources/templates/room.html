@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>room</title>
+</head>
+<body>
+  <form>
+    <label for="room_name">room_name</label><input id="room_name">
+    <label for="game_name">game_name</label><input id="game_name">
+    <label for="people_number">people_number</label><input type="number" id="people_number">
+    <label for="start_date">start_date</label><input type="datetime-local" id="start_date">
+    <label for="voice_chat">voice_chat</label><input type="number" id="voice_chat">
+    <label for="lowest_tier">lowest_tier</label><input type="number"id="lowest_tier">
+    <label for="highest_tier">highest_tier</label><input type="number" id="highest_tier">
+    <label for="user_pk">user_pk</label><input type="number" id="user_pk">
+    <button type="submit">제출</button>
+  </form>
+  <h1 id="result"></h1>
+</body>
+<script>
+  function setDateString(date_string) {
+    result = date_string.slice(0,10) + " " + date_string.slice(11,date_string.length) + ":00"
+    console.log(result)
+    return result
+  }
+  document.querySelector("#start_date").addEventListener("change",() => {
+    setDateString(event.target.value);
+  })
+  function postData(url,data) {
+    return fetch(url, {
+        method: "POST",
+        mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
+        body: JSON.stringify(data)
+      })
+      .then(result => {
+        console.log(result);
+        document.querySelector("#result").innerText = JSON.stringify(result);
+      })
+  }
+
+  document.querySelector("form").addEventListener("submit",() => {
+    event.preventDefault();
+    let body_data = {
+      room_name: event.target.querySelector("#room_name").value,
+      game_name: event.target.querySelector("#game_name").value,
+      people_number: event.target.querySelector("#people_number").value,
+      start_date: setDateString(event.target.querySelector("#start_date").value),
+      voice_chat: event.target.querySelector("#voice_chat").value === "1",
+      lowest_tier: event.target.querySelector("#lowest_tier").value,
+      highest_tier: event.target.querySelector("#highest_tier").value,
+      user_pk: event.target.querySelector("#user_pk").value
+    };
+    postData("http://localhost:8080/api/room",body_data);
+  })
+</script>
+</html>

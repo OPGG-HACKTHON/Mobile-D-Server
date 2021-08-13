@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>game</title>
+</head>
+<body>
+  <form>
+    <label for="user_pk">user_pk</label><input id="user_pk">
+    <label for="name">game</label><input id="name">
+    <label for="game_id">game_id</label><input id="game_id">
+    <label for="tier">tier</label><input id="tier" type="number">
+    <button type="submit">제출</button>
+  </form>
+  <h1 id="result"></h1>
+</body>
+<script>
+  function postData(url,data) {
+    return fetch(url, {
+      method: "POST",
+      mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
+      body: JSON.stringify(data)
+    })
+    .then(result => {
+      console.log(result);
+      document.querySelector("#result").innerText = JSON.stringify(result);
+    })
+  }
+  document.querySelector("form").addEventListener("submit",() => {
+    event.preventDefault();
+    let body_data = {
+      user_pk: event.target.querySelector("#user_pk").value,
+      name: event.target.querySelector("#name").value,
+      game_id: event.target.querySelector("#game_id").value,
+      tier: event.target.querySelector("#tier").value,
+    };
+    postData("http://localhost:8080/api/game",body_data);
+  })
+</script>
+</html>
