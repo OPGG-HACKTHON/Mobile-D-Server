@@ -42,10 +42,8 @@ public class GameDao {
     }
 
     public int updateGameDataWithGameData(Game game_data) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(game_data);
-        jdbc.update(GameDaoSqls.UPDATE_GAME_WITH_GAME_DATA,sqlParameterSource,keyHolder);
-        return keyHolder.getKey().intValue();
+        return jdbc.update(GameDaoSqls.UPDATE_GAME_WITH_GAME_DATA,sqlParameterSource);
     }
 
     public int deleteGameDataWithGamePk(int game_pk) {
