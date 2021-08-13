@@ -2,6 +2,7 @@ package opgg.mobiled.joinus.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import opgg.mobiled.joinus.dto.Connections;
+import opgg.mobiled.joinus.dto.User;
 import opgg.mobiled.joinus.service.ConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,8 @@ public class ConnectionController {
     }
 
     @GetMapping
-    public List<Connections> selectConnectionWithStartAndIsFriend(@RequestParam int start_id, @RequestParam boolean friend_or_black){
-        List<Connections> connectionResult = connectionService.selectConnectionWithStartAndIsFriend(start_id,friend_or_black);
+    public List<User> selectConnectionWithStartAndIsFriend(@RequestParam int start_id, @RequestParam boolean friend_or_black){
+        List<User> connectionResult = connectionService.selectConnectionWithStartAndIsFriend(start_id,friend_or_black);
         return connectionResult;
     }
 }

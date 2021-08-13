@@ -1,7 +1,7 @@
 package opgg.mobiled.joinus.dao;
 
 import opgg.mobiled.joinus.dto.Connections;
-import opgg.mobiled.joinus.dto.Manner;
+import opgg.mobiled.joinus.dto.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -20,6 +20,8 @@ import java.util.Map;
 public class ConnectionDao {
     private NamedParameterJdbcTemplate jdbc;
     private RowMapper<Connections> connectionsRowMapper = BeanPropertyRowMapper.newInstance(Connections.class);
+    private RowMapper<User> userRowMapper = BeanPropertyRowMapper.newInstance(User.class);
+
 
     public ConnectionDao(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -28,14 +30,15 @@ public class ConnectionDao {
     public int insertConnectionWithStartAndEndAndIsFriend(Connections connection_data) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(connection_data);
-        jdbc.update(ConnectionDaoSqls.INSERT_CONNECTION_WITH_START_AND_END_AND_ISFRIEND,sqlParameterSource,keyHolder);
+        jdbc.update(ConnectionDaoSqls.INSERT_CONNECTION_WITH_START_AND_END_AND_FRIEND_OR_BLACK,sqlParameterSource,keyHolder);
         return keyHolder.getKey().intValue();
     }
 
-    public List<Connections> selectConnectionWithStartAndIsFriend(int start_id, boolean friend_or_black) {
+    public List<User> selectUserWithStartAndFriendOrBlack(int start_id, boolean friend_or_black) {
         Map<String, Object> params = new HashMap<>();
         params.put("start_id",start_id);
         params.put("friend_or_black",friend_or_black);
-        return jdbc.query(ConnectionDaoSqls.SELECT_CONNECTION_WITH_START_AND_ISFRIEND, params, connectionsRowMapper);
+        return jdbc.query(ConnectionDaoSqls.SELECT_USER_WITH_START_AND_FRIEND_OR_BLACK, params, userRowMapper);
     }
+
 }
