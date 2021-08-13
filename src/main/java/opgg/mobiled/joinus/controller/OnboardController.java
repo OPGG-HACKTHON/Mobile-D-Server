@@ -1,5 +1,8 @@
 package opgg.mobiled.joinus.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import opgg.mobiled.joinus.dto.Connections;
 import opgg.mobiled.joinus.dto.Onboard;
 import opgg.mobiled.joinus.dto.User;
@@ -12,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/onboard") // 해당 주소로 들어오면 아래의 함수를 메소드와 함께 이용 가능, 더 자원을 표시하고 싶다면 더 표시 가능
+
 public class OnboardController {
     private OnboardService onboardService;
 
@@ -21,9 +25,9 @@ public class OnboardController {
     }
 
     @PutMapping
+    @ApiOperation(value = "온보딩 정보 등록", notes = "sub(token)을 이용하여 온보딩 정보를 등록합니다.")
     public int insertOnboardDataWithSubAndGenderAndAgeAndImageAndNickName(@RequestBody Onboard onboard_data) {
         int insertResult = onboardService.updateOnboardWithOnboardData(onboard_data);
-
         return insertResult;
     }
 }
