@@ -1,5 +1,6 @@
 package opgg.mobiled.joinus.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import opgg.mobiled.joinus.dto.RoomAndRoomUserVO;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,28 +30,28 @@ public class RoomController {
     }
 
     @PostMapping
-    public int insertRoomAndRoomUserWithRoomDataAndUserPk(@RequestBody RoomAndRoomUserVO roomAndRoomUserVO) {
+    public int insertRoomAndRoomUserWithRoomDataAndUserPk(@Parameter(description = "만들 방에 대한 정보와 방장pk값을 주시면 됩니다.", required = true) @RequestBody RoomAndRoomUserVO roomAndRoomUserVO) {
         int resultRoomPk = roomService.insertRoomAndRoomUserWithRoomDataAndUserPk(roomAndRoomUserVO);
 
         return resultRoomPk;
     }
 
     @PutMapping
-    public int updateRoomWithRoomData(@RequestBody Room room) {
+    public int updateRoomWithRoomData(@Parameter(description = "수정할 방에 대한 정보를 주시면 됩니다.", required = true) @RequestBody Room room) {
         int updateResult = roomService.updateRoomWithRoomData(room);
 
         return updateResult;
     }
 
     @DeleteMapping
-    public int deleteRoomWithRoomPk(@RequestParam int room_pk) {
+    public int deleteRoomWithRoomPk(@Parameter(description = "삭제할 방에 대한 정보를 주시면 됩니다.", required = true) @RequestParam int room_pk) {
         int deleteResult = roomService.deleteRoomWithRoomPk(room_pk);
 
         return deleteResult;
     }
 
     @GetMapping(path = "/{room_pk}")
-    public Room selectRoomDetailWithRoomPk(@PathVariable(name = "room_pk") int room_pk) {
+    public Room selectRoomDetailWithRoomPk(@Parameter(description = "조회할 방에대한 pk값을 주시면 방에 대한 상세정보를 드립니다.", required = true) @PathVariable(name = "room_pk") int room_pk) {
         Room resultRoom = roomService.selectRoomDetailWithRoomPk(room_pk);
 
         return resultRoom;

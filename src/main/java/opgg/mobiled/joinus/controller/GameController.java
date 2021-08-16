@@ -32,21 +32,21 @@ public class GameController {
     }
 
     @PostMapping
-    public int insertGameListWithUserPkAndGameInformation(@RequestBody Game game_data) {
+    public int insertGameListWithUserPkAndGameInformation(@Parameter(description = "게임에 대한 정보를 넘겨주면 됩니다. pk값은 안넘겨주셔도 괜찮습니다", required = true) @RequestBody Game game_data) {
         int insertResult = gameService.insertGameListWithUserPkAndGameInformation(game_data);
 
         return insertResult;
     }
 
     @PutMapping
-    public int updateGameDataWithGameData(@RequestBody Game game_data) {
+    public int updateGameDataWithGameData(@Parameter(description = "게임에 대한 정보를 넘겨주면 됩니다. pk값은 안넘겨주셔도 괜찮습니다", required = true) @RequestBody Game game_data) {
         int updateResult = gameService.updateGameDataWithGameData(game_data);
 
         return updateResult;
     }
 
     @DeleteMapping
-    public int deleteGameDataWithGamePk(@RequestParam int game_pk) {
+    public int deleteGameDataWithGamePk(@Parameter(description = "삭제할 게임 pk값을 주시면 됩니다.", required = true) @RequestParam int game_pk) {
         int deleteResult = gameService.deleteGameDataWithGamePk(game_pk);
 
         return deleteResult;
