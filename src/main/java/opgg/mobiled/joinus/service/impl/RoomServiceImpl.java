@@ -25,6 +25,13 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public List<Room> selectAllRoom() {
         List<Room> resultRoomList = roomDao.selectAllRoom();
+        for (int i = 0; i<resultRoomList.size(); i++) {
+            if (resultRoomList.get(i).getIs_start() == 0) {
+                if (roomUserDao.checkIsFullRoomWithRoomPk(resultRoomList.get(i).getPk())) {
+                    resultRoomList.get(i).setIs_start(2);
+                }
+            }
+        }
 
         return resultRoomList;
     }
