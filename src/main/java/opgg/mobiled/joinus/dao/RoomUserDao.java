@@ -45,4 +45,10 @@ public class RoomUserDao {
         params.put("pk",room_user_pk);
         return jdbc.update(RoomUserDaoSqls.DELETE_ROOM_USER_WITH_ROOM_USER_PK,params);
     }
+
+    public boolean checkIsFullRoomWithRoomPk(int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("room_pk",room_pk);
+        return 1 == jdbc.queryForObject(RoomUserDaoSqls.SELECT_IS_SAME_USER_COUNT_WITH_ROOM_PEOPLE_NUMBER, params,Integer.class);
+    }
 }

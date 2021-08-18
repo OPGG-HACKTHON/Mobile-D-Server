@@ -1,7 +1,9 @@
 package opgg.mobiled.joinus.controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
-import opgg.mobiled.joinus.dto.Game;
 import opgg.mobiled.joinus.dto.Manner;
 import opgg.mobiled.joinus.service.MannerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ public class MannerController {
     }
 
     @PostMapping
+    @ApiOperation(value = "매너도 평가", notes = "user_pk가 target_pk를 평가합니다. 매너점수는 manner(0:good, 1:bad)로 입력됩니다. pk값은 안주셔도 괜찮습니다.")
     public int insertMannerWithUserPkAndTargetPkAndManner(@RequestBody Manner manner_data) {
         int insertResult = mannerService.insertMannerWithUserPkAndTargetPkAndManner(manner_data);
 
@@ -27,6 +30,7 @@ public class MannerController {
     }
 
     @GetMapping
+    @ApiOperation(value = "매너도 조회", notes = "target_pk의 매너 점수를 계산하여 리턴합니다. (**추후 변경 가능**)")
     public int selectMannerWithTargetPK(@Parameter(description = "타겟 유저 pk 값", required = true, example = "2") @RequestParam int target_pk){
         int mannerResult = mannerService.selectAndCalculateManner(target_pk);
         return mannerResult;
