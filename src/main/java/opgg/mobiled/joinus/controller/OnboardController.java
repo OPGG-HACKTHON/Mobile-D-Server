@@ -1,12 +1,7 @@
 package opgg.mobiled.joinus.controller;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
-import opgg.mobiled.joinus.dto.Connections;
 import opgg.mobiled.joinus.dto.Onboard;
-import opgg.mobiled.joinus.dto.User;
-import opgg.mobiled.joinus.service.ConnectionService;
 import opgg.mobiled.joinus.service.OnboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
