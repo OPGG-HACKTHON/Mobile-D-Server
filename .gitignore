@@ -38,3 +38,6 @@ out/
 
 ### DBConfig ###
 application.properties
+
+### firebase ###
+mypush-1be38-firebase-adminsdk-5zs2y-5e393e6e54.json
