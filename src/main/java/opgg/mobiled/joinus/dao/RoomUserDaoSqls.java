@@ -12,4 +12,5 @@ public class RoomUserDaoSqls {
             "ON room.pk = RU.room_pk " +
             "WHERE room.pk = :room_pk " +
             "group by room.pk ";
+    public static final String DELETE_ROOM_USER_WITH_ROOM_PK = "DELETE FROM ROOMUSER WHERE room_pk = :room_pk";
 }
