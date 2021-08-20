@@ -3,6 +3,7 @@ package opgg.mobiled.joinus.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import opgg.mobiled.joinus.dto.RoomAndRoomUserVO;
+import opgg.mobiled.joinus.service.RoomUserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,9 +20,13 @@ import opgg.mobiled.joinus.dto.Room;
 @RequestMapping(path = "/api/room")
 public class RoomController {
     private RoomService roomService;
+    private RoomUserService roomUserService;
 
     @Autowired
-    public RoomController(RoomService roomService) {this.roomService = roomService;}
+    public RoomController(RoomService roomService,RoomUserService roomUserService) {
+        this.roomService = roomService;
+        this.roomUserService = roomUserService;
+    }
 
     @GetMapping
     @ApiOperation(value = "방 목록 조회", notes = "모든 방에 대한 정보를 드립니다.")
@@ -48,8 +53,9 @@ public class RoomController {
     }
 
     @DeleteMapping
-    @ApiOperation(value = "방 삭제", notes = "삭제할 방에 대한 pk값을 주시면 됩니다.")
+    @ApiOperation(value = "방 삭제", notes = "삭제할 방에 대한 pk값을 주시면 됩니다. 관련된 유저도 같이 지워줍니다.")
     public int deleteRoomWithRoomPk(@Parameter(description = "삭제할 방에 대한 pk값을 주시면 됩니다.", required = true) @RequestParam int room_pk) {
+        int roomUserDeleteResult = roomUserService.deleteUserInRoomWithRoomPk(room_pk);
         int deleteResult = roomService.deleteRoomWithRoomPk(room_pk);
 
         return deleteResult;
