@@ -90,7 +90,9 @@ public class LoginServiceImpl implements LoginService{
     public User OAuthCheck(String token) {
         User user = null;
         try {
+
             String access_token_data = postRequestWithToken(token);
+            
             String user_data = getRequestWithAccessToken((String) convertJSONstringToMap(access_token_data).get("access_token"));
             String login_token = (String) convertJSONstringToMap(user_data).get("sub");
             // 로그인 시도
