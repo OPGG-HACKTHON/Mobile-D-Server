@@ -90,12 +90,15 @@ public class LoginServiceImpl implements LoginService{
     public User OAuthCheck(String token) {
         User user = null;
         try {
+
             String access_token_data = postRequestWithToken(token);
+
             String user_data = getRequestWithAccessToken((String) convertJSONstringToMap(access_token_data).get("access_token"));
             String login_token = (String) convertJSONstringToMap(user_data).get("sub");
             // 로그인 시도
             try {
                 user = LoginDao.Login(login_token);
+                user.setLogin(true);
                 return user;
 
             // 로그인 시도 후 해당 값이 없다 == 비회원 유저이다.
@@ -104,6 +107,7 @@ public class LoginServiceImpl implements LoginService{
             } catch (org.springframework.dao.EmptyResultDataAccessException e) {
                 int pk = LoginDao.SignupWithOnlyToken(login_token);
                 user = LoginDao.Login(login_token);
+                user.setLogin(false);
                 return user;
             }
         } catch (Exception e) {

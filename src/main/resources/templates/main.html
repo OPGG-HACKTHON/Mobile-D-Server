@@ -9,7 +9,7 @@
 </body>
 <script>
     document.querySelector("#oauth").addEventListener("click",() => {
-        location.href = ""
+        location.href = "https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code&client_id=139499651998-5mhlkgtpjgmlfbu4evd6i6a7oarrisdu.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/login/"
     })
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
