@@ -19,5 +19,9 @@ public class Room {
     private boolean voice_chat;
     private int lowest_tier;
     private int highest_tier;
+
     private int is_start;
+    private int now_people_cnt;
+
+    private int leader_pk;
 }

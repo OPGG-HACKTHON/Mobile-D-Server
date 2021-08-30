@@ -34,6 +34,18 @@ public class RoomUserDao {
         return jdbc.queryForList(RoomUserDaoSqls.SELECT_ALL_USER_IN_ROOM_WITH_ROOM_PK,params,Integer.class);
     }
 
+    public int selectLeaderInRoomWithRoomPk(int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("room_pk",room_pk);
+        return jdbc.queryForObject(RoomUserDaoSqls.SELECT_LEADER_IN_ROOM_WITH_ROOM_PK,params,Integer.class);
+    }
+
+    public int selectRoomUserCountInRoomWithRoomPk(int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("room_pk",room_pk);
+        return jdbc.queryForObject(RoomUserDaoSqls.SELECT_ROOM_USER_COUNT_IN_ROOM_WITH_ROOM_PK,params,Integer.class);
+    }
+
     public User selectUserDetailWithUserPk(int user_pk) {
         Map<String, Integer> params = new HashMap<>();
         params.put("user_pk",user_pk);
