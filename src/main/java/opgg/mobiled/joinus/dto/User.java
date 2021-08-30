@@ -13,4 +13,5 @@ public class User {
     private int age;
     private String image_address;
     private String nickname;
+    private boolean isLogin;
 }
