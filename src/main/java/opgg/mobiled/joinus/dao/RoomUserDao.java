@@ -1,6 +1,7 @@
 package opgg.mobiled.joinus.dao;
 
 import opgg.mobiled.joinus.dto.Room;
+import opgg.mobiled.joinus.dto.RoomUserInformationVO;
 import opgg.mobiled.joinus.dto.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,6 +18,7 @@ public class RoomUserDao {
     private static NamedParameterJdbcTemplate jdbc;
     private static RowMapper<Room> roomRowMapper = BeanPropertyRowMapper.newInstance(Room.class);
     private static RowMapper<User> userRowMapper = BeanPropertyRowMapper.newInstance(User.class);
+    private static RowMapper<RoomUserInformationVO> roomUserInformationVORowMapper = BeanPropertyRowMapper.newInstance(RoomUserInformationVO.class);
 
     public RoomUserDao(DataSource dataSource) {this.jdbc = new NamedParameterJdbcTemplate(dataSource);}
 
@@ -32,6 +34,18 @@ public class RoomUserDao {
         Map<String, Integer> params = new HashMap<>();
         params.put("room_pk",room_pk);
         return jdbc.queryForList(RoomUserDaoSqls.SELECT_ALL_USER_IN_ROOM_WITH_ROOM_PK,params,Integer.class);
+    }
+
+    public int selectLeaderInRoomWithRoomPk(int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("room_pk",room_pk);
+        return jdbc.queryForObject(RoomUserDaoSqls.SELECT_LEADER_IN_ROOM_WITH_ROOM_PK,params,Integer.class);
+    }
+
+    public int selectRoomUserCountInRoomWithRoomPk(int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("room_pk",room_pk);
+        return jdbc.queryForObject(RoomUserDaoSqls.SELECT_ROOM_USER_COUNT_IN_ROOM_WITH_ROOM_PK,params,Integer.class);
     }
 
     public User selectUserDetailWithUserPk(int user_pk) {
@@ -56,5 +70,11 @@ public class RoomUserDao {
         Map<String, Integer> params = new HashMap<>();
         params.put("room_pk",room_pk);
         return jdbc.update(RoomUserDaoSqls.DELETE_ROOM_USER_WITH_ROOM_PK,params);
+    }
+
+    public List<RoomUserInformationVO> selectUserListWithRoomPk (int room_pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("room_pk",room_pk);
+        return jdbc.query(RoomUserDaoSqls.SELECT_USER_LIST_WITH_ROOM_PK,params,roomUserInformationVORowMapper);
     }
 }
