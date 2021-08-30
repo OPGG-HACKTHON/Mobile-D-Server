@@ -15,4 +15,9 @@ public class RoomUserDaoSqls {
             "WHERE room.pk = :room_pk " +
             "group by room.pk ";
     public static final String DELETE_ROOM_USER_WITH_ROOM_PK = "DELETE FROM roomuser WHERE room_pk = :room_pk";
+    public static final String SELECT_USER_LIST_WITH_ROOM_PK = "select us.pk,us.firebase_token,us.token,us.gender,us.age,ga.game_id " +
+            "from roomuser as ru " +
+            "inner join user as us on ru.user_pk = us.pk " +
+            "inner join game as ga on ga.user_pk = us.pk " +
+            "where ru.room_pk = :room_pk group by us.pk;";
 }

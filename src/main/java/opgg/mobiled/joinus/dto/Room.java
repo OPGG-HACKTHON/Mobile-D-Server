@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +25,5 @@ public class Room {
     private int now_people_cnt;
 
     private int leader_pk;
+    private List<RoomUserInformationVO> user_list;
 }

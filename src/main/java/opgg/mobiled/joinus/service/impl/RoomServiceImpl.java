@@ -63,7 +63,7 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public Room selectRoomDetailWithRoomPk(int room_pk) {
         Room resultRoom = roomDao.selectRoomDetailWithRoomPk(room_pk);
-
+        resultRoom.setUser_list(roomUserDao.selectUserListWithRoomPk(room_pk));
         return resultRoom;
     }
 }
