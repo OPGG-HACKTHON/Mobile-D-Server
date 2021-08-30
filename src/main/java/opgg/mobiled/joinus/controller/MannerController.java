@@ -30,7 +30,7 @@ public class MannerController {
     }
 
     @GetMapping
-    @ApiOperation(value = "매너도 조회", notes = "target_pk의 매너 점수를 계산하여 리턴합니다. (**추후 변경 가능**)")
+    @ApiOperation(value = "매너도 조회", notes = "target_pk의 매너 점수를 계산하여 리턴합니다.")
     public int selectMannerWithTargetPK(@Parameter(description = "타겟 유저 pk 값", required = true, example = "2") @RequestParam int target_pk){
         int mannerResult = mannerService.selectAndCalculateManner(target_pk);
         return mannerResult;
