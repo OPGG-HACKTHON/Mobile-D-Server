@@ -77,4 +77,11 @@ public class RoomUserDao {
         params.put("room_pk",room_pk);
         return jdbc.query(RoomUserDaoSqls.SELECT_USER_LIST_WITH_ROOM_PK,params,roomUserInformationVORowMapper);
     }
+
+    public String selectGameIdWithUserPkAndGameName (int user_pk, String game_name) {
+        Map<String, String> params = new HashMap<>();
+        params.put("user_pk",Integer.toString(user_pk));
+        params.put("game_name",game_name);
+        return jdbc.queryForObject(RoomUserDaoSqls.SELECT_GAME_ID_WITH_USER_PK_AND_GAME_NAME,params,String.class);
+    }
 }
