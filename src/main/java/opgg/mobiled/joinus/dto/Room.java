@@ -17,6 +17,8 @@ public class Room {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Seoul")
     private Timestamp start_date;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "Asia/Seoul")
+    private Timestamp created_at;
     private boolean voice_chat;
     private int lowest_tier;
     private int highest_tier;
