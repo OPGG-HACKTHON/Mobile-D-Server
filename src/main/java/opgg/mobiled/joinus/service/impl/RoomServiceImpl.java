@@ -72,6 +72,13 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public Room selectRoomDetailWithRoomPk(int room_pk) {
         Room resultRoom = roomDao.selectRoomDetailWithRoomPk(room_pk);
+        resultRoom.setLeader_pk(roomUserDao.selectLeaderInRoomWithRoomPk(resultRoom.getPk()));
+        resultRoom.setNow_people_cnt(roomUserDao.selectRoomUserCountInRoomWithRoomPk(resultRoom.getPk()));
+        if (resultRoom.getIs_start() == 0) {
+            if (resultRoom.getPeople_number() == resultRoom.getNow_people_cnt()) {
+                resultRoom.setIs_start(2);
+            }
+        }
         List<Integer> user_pk_list = roomUserDao.selectAllUserPkInRoomWithRoomPk(resultRoom.getPk());
         List<User> user_list = new ArrayList<>();
         for (int j = 0; j<user_pk_list.size(); j++) {
