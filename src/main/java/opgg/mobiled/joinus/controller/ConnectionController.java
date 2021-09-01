@@ -38,9 +38,6 @@ public class ConnectionController {
     @ApiOperation(value = "친구/블랙리스트 조회", notes = "조회를 원하는 회원이 등록한 친구/블랙을 조회합니다. 해당하는 사용자들의 user정보 리스트가 리턴됩니다.")
     public ResponseEntity<? extends BasicResponse> selectConnectionWithStartAndIsFriend(@RequestParam @ApiParam(value = "관계를 등록한 사람", required = true) int start_id, @RequestParam @ApiParam(value = "친구(true)/블랙(false)", required = true) boolean friend_or_black){
         List<User> connectionResult = connectionService.selectConnectionWithStartAndIsFriend(start_id,friend_or_black);
-        for (User user : connectionResult) {
-            System.out.println("&&& : "+user.getFirebase_token());
-        }
         if(connectionResult.size() < 1){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("조회 정보가 존재하지 않습니다. 사용자 id를 확인해주세요")); //실패 response
         }
