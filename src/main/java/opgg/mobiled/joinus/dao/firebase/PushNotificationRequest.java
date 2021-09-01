@@ -16,6 +16,12 @@ public class PushNotificationRequest {
         super();
     }
 
+    public PushNotificationRequest(String title, String message, String topic) {
+        this.title = title;
+        this.message = message;
+        this.topic = topic;
+    }
+
     public PushNotificationRequest(String title, String message, String topic, String token) {
         super();
         this.title = title;

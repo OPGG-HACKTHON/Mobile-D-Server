@@ -12,4 +12,5 @@ public class Onboard {
     private int age;
     private String image_address;
     private String nickname;
+    private String firebase_token;
 }
