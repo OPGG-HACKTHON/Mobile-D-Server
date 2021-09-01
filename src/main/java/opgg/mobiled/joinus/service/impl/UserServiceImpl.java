@@ -21,15 +21,4 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-
-    @Override
-    public String selectFirebaseTokenWithTargetToken(String target_token) {
-        List<User> user = userDao.selectFirebaseTokenWithTargetToken(target_token);
-        if(user.size() < 1){
-            return null; //TODO : error code 반환으로 바꾸기
-        }
-
-        String firebaseToken = user.get(0).getFirebase_token();
-        return firebaseToken;
-    }
 }

@@ -25,10 +25,10 @@ public class UserDao {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
 
-
-    public List<User> selectFirebaseTokenWithTargetToken(String target_token) {
+    public List<User> selectUserWithToken(String token) {
         Map<String, String> params = new HashMap<>();
-        params.put("target_token",target_token);
-        return jdbc.query(UserDaoSqls.SELECT_FIREBASE_TOKEN_WITH_TARGET_TOKEN, params, userRowMapper);
+        params.put("token",token);
+        return jdbc.query(UserDaoSqls.SELECT_USER_WITH_TOKEN, params, userRowMapper);
     }
+
 }
