@@ -92,7 +92,7 @@ public class LoginServiceImpl implements LoginService{
         try {
 
             String access_token_data = postRequestWithToken(token);
-
+            System.out.println(access_token_data);
             String user_data = getRequestWithAccessToken((String) convertJSONstringToMap(access_token_data).get("access_token"));
             String login_token = (String) convertJSONstringToMap(user_data).get("sub");
             // 로그인 시도
@@ -104,6 +104,34 @@ public class LoginServiceImpl implements LoginService{
             // 로그인 시도 후 해당 값이 없다 == 비회원 유저이다.
             // 가입 시키고 로그인 시킴
             // 세션처리는 추후에 해야할 듯
+            } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+                int pk = LoginDao.SignupWithOnlyToken(login_token);
+                user = LoginDao.Login(login_token);
+                user.setLogin(false);
+                return user;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return user;
+    }
+
+    @Override
+    public User acccessCheck(String token) {
+        User user = null;
+        try {
+
+            String user_data = getRequestWithAccessToken(token);
+            String login_token = (String) convertJSONstringToMap(user_data).get("sub");
+            // 로그인 시도
+            try {
+                user = LoginDao.Login(login_token);
+                user.setLogin(true);
+                return user;
+
+                // 로그인 시도 후 해당 값이 없다 == 비회원 유저이다.
+                // 가입 시키고 로그인 시킴
+                // 세션처리는 추후에 해야할 듯
             } catch (org.springframework.dao.EmptyResultDataAccessException e) {
                 int pk = LoginDao.SignupWithOnlyToken(login_token);
                 user = LoginDao.Login(login_token);
