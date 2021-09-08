@@ -21,4 +21,9 @@ public class RoomUserDaoSqls {
             "inner join game as ga on ga.user_pk = us.pk " +
             "where ru.room_pk = :room_pk group by us.pk;";
     public static final String SELECT_GAME_ID_WITH_USER_PK_AND_GAME_NAME = "SELECT game_id FROM game WHERE user_pk = :user_pk AND name = :game_name";
+    public static final String SELECT_ROOM_PK_LIST_WITH_USER_SUB_AND_IS_LEADER = "SELECT ru.room_pk FROM roomuser as ru " +
+            "JOIN user as us " +
+            "ON us.pk = ru.user_pk " +
+            "WHERE us.token = :sub " +
+            "AND ru.is_leader = :is_leader ";
 }
