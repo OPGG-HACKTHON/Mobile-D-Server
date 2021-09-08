@@ -88,4 +88,14 @@ public class RoomServiceImpl implements RoomService{
         resultRoom.setUser_list(user_list);
         return resultRoom;
     }
+
+    @Override
+    public List<Room> selectRoomListWithUserSub(String sub, int myroom) {
+        List<Integer> roomPkList = roomUserDao.selectRoomPkListWithUserSubAndIsLeader(sub,myroom);
+        List<Room> resultRoomList = new ArrayList<>();
+        for(int i=0; i<roomPkList.size(); i++) {
+            resultRoomList.add(selectRoomDetailWithRoomPk(roomPkList.get(i)));
+        }
+        return resultRoomList;
+    }
 }

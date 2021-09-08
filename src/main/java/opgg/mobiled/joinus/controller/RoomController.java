@@ -68,4 +68,12 @@ public class RoomController {
 
         return resultRoom;
     }
+
+    @GetMapping(path = "/user/{sub}/{myroom}")
+    @ApiOperation(value = "내가 참여 or 만든 방 조회", notes = "조회할 유저의 sub값과 분기를 통해 알려주시면 방 리스트를 드립니다")
+    public List<Room> selectRoomListWithUserSub(@Parameter(description = "조회할 유저의 sub값을 주세요", required = true) @PathVariable(name = "sub") String sub, @Parameter(description = "내가 만든 방을 조회하고 싶으면 1, 참여한 방을 조회하고 싶으면 0을 입력해주세요", required = true) @PathVariable(name = "myroom") int myroom) {
+        List<Room> resultRoomList = roomService.selectRoomListWithUserSub(sub,myroom);
+
+        return resultRoomList;
+    }
 }

@@ -11,4 +11,5 @@ public interface RoomService {
     public int updateRoomWithRoomData(Room room);
     public int deleteRoomWithRoomPk(int room_pk);
     public Room selectRoomDetailWithRoomPk(int room_pk);
+    public List<Room> selectRoomListWithUserSub(String sub, int myroom);
 }

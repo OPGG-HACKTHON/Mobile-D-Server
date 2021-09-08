@@ -1,5 +1,6 @@
 package opgg.mobiled.joinus.dao;
 
+import io.swagger.models.auth.In;
 import opgg.mobiled.joinus.dto.Room;
 import opgg.mobiled.joinus.dto.RoomUserInformationVO;
 import opgg.mobiled.joinus.dto.User;
@@ -83,5 +84,12 @@ public class RoomUserDao {
         params.put("user_pk",Integer.toString(user_pk));
         params.put("game_name",game_name);
         return jdbc.queryForObject(RoomUserDaoSqls.SELECT_GAME_ID_WITH_USER_PK_AND_GAME_NAME,params,String.class);
+    }
+
+    public List<Integer> selectRoomPkListWithUserSubAndIsLeader(String sub, int myroom) {
+        Map<String, String> params = new HashMap<>();
+        params.put("sub",sub);
+        params.put("is_leader",Integer.toString(myroom));
+        return jdbc.queryForList(RoomUserDaoSqls.SELECT_ROOM_PK_LIST_WITH_USER_SUB_AND_IS_LEADER,params,Integer.class);
     }
 }
