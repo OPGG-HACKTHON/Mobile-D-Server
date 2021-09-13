@@ -31,6 +31,10 @@ public class OnboardServiceImpl implements OnboardService {
         if(userDao.selectUserWithToken(onboard_data.getSub()).size() < 1){
             return 99999;
         }
+        //random으로 지정하기
+        String[] urls = {"a", "b", "c", "d", "e"};
+        onboard_data.setImage_address(urls[(int)(Math.random()*5)]);
+
         int resultUpdate = onboardDao.updateOnboardWithOnboardData(onboard_data);
         return resultUpdate;
     }
