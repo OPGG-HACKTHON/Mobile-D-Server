@@ -28,4 +28,6 @@ public class Room {
 
     private int leader_pk;
     private List<User> user_list;
+
+    private int room_manner;
 }
