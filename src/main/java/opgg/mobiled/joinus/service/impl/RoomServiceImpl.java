@@ -1,6 +1,8 @@
 package opgg.mobiled.joinus.service.impl;
 
 import opgg.mobiled.joinus.dao.GameDao;
+import opgg.mobiled.joinus.dao.MannerDao;
+import opgg.mobiled.joinus.dto.Manner;
 import opgg.mobiled.joinus.dto.RoomAndRoomUserVO;
 import opgg.mobiled.joinus.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,13 @@ import java.util.List;
 public class RoomServiceImpl implements RoomService{
     private RoomDao roomDao;
     private RoomUserDao roomUserDao;
+    private MannerDao mannerDao;
 
     @Autowired
-    public RoomServiceImpl(RoomDao roomDao, RoomUserDao roomUserDao, GameDao gameDao) {
+    public RoomServiceImpl(RoomDao roomDao, RoomUserDao roomUserDao, GameDao gameDao, MannerDao mannerDao) {
         this.roomDao = roomDao;
         this.roomUserDao = roomUserDao;
+        this.mannerDao = mannerDao;
     }
 
     @Override
@@ -80,13 +84,39 @@ public class RoomServiceImpl implements RoomService{
             }
         }
         List<Integer> user_pk_list = roomUserDao.selectAllUserPkInRoomWithRoomPk(resultRoom.getPk());
-        List<User> user_list = new ArrayList<>();
+        List<User> user_list = new ArrayList<>(); //방에 참가한 user리스트
         for (int j = 0; j<user_pk_list.size(); j++) {
             user_list.add(roomUserDao.selectUserDetailWithUserPk(user_pk_list.get(j)));
             user_list.get(j).setNickname(roomUserDao.selectGameIdWithUserPkAndGameName(user_pk_list.get(j),resultRoom.getGame_name()));
         }
         resultRoom.setUser_list(user_list);
+
+        //방 매너도 계산
+        int room_manner = 0;
+        for (User user : user_list) {
+            List<Manner> manners = mannerDao.selectManner(user.getPk());
+            room_manner += calcManner(manners);
+        }
+        resultRoom.setRoom_manner(room_manner);
+
         return resultRoom;
+    }
+
+    private int calcManner(List<Manner> manners){
+        //good이면 +1, bad이면 -1로 계산해서 결과 값 return
+        int resultManner = 0;
+        for (Manner m : manners) {
+            switch (m.getManner()){
+                case 1: //manner good
+                    resultManner++;
+                    break;
+                case 0: //manner bad
+                    resultManner--;
+                    break;
+            }
+        }
+
+        return resultManner;
     }
 
     @Override
