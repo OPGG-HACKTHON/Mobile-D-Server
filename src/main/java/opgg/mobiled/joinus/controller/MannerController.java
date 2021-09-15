@@ -29,7 +29,7 @@ public class MannerController {
     }
 
     @PostMapping
-    @ApiOperation(value = "매너도 평가", notes = "user_pk가 target_pk를 평가합니다. 매너점수는 manner(0:good, 1:bad)로 입력됩니다. pk값은 안주셔도 괜찮습니다.")
+    @ApiOperation(value = "매너도 평가", notes = "user_pk가 target_pk를 평가합니다. 매너점수는 manner(1:good, 0:bad)로 입력됩니다. pk값은 안주셔도 괜찮습니다.")
     public ResponseEntity<? extends BasicResponse> insertMannerWithUserPkAndTargetPkAndManner(@RequestBody Manner manner_data) {
         int insertResult = mannerService.insertMannerWithUserPkAndTargetPkAndManner(manner_data);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse(200,"매너도 평가 성공")); //성공 response
@@ -40,7 +40,7 @@ public class MannerController {
     public ResponseEntity<? extends BasicResponse> selectMannerWithTargetPK(@Parameter(description = "타겟 유저 pk 값", required = true, example = "2") @RequestParam int target_pk){
         int mannerResult = mannerService.selectAndCalculateManner(target_pk);
         if(mannerResult == 99999){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("매너도 평가를 받지 않았거나, 존재하지 않는 user입니다. target_pk를 확인해주세요")); //실패 response
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("존재하지 않는 user입니다. target_pk를 확인해주세요")); //실패 response
         }
         return ResponseEntity.ok().body(new CommonResponse<Integer>(mannerResult)); //성공 data response
     }
