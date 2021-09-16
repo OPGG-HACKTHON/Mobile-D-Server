@@ -31,4 +31,9 @@ public class UserDao {
         return jdbc.query(UserDaoSqls.SELECT_USER_WITH_TOKEN, params, userRowMapper);
     }
 
+    public List<User> selectUserWithPk(int pk) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("pk",pk);
+        return jdbc.query(UserDaoSqls.SELECT_USER_WITH_PK, params, userRowMapper);
+    }
 }
