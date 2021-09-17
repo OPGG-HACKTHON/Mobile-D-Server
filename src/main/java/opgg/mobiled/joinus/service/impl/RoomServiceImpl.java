@@ -1,6 +1,7 @@
 package opgg.mobiled.joinus.service.impl;
 
 import opgg.mobiled.joinus.dao.GameDao;
+import opgg.mobiled.joinus.dto.OnlyRoom;
 import opgg.mobiled.joinus.dto.RoomAndRoomUserVO;
 import opgg.mobiled.joinus.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public int updateRoomWithRoomData(Room room) {
+    public int updateRoomWithRoomData(OnlyRoom room) {
         int resultUpdate = roomDao.updateRoomWithRoomData(room);
 
         return resultUpdate;
