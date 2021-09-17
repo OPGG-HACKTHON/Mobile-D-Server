@@ -1,5 +1,6 @@
 package opgg.mobiled.joinus.dao;
 
+import opgg.mobiled.joinus.dto.OnlyRoom;
 import opgg.mobiled.joinus.dto.Room;
 import opgg.mobiled.joinus.dto.RoomAndRoomUserVO;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -35,11 +36,16 @@ public class RoomDao {
         return keyHolder.getKey().intValue();
     }
 
-    public static int updateRoomWithRoomData(Room room) {
+    public static int updateRoomWithRoomData(OnlyRoom room) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(room);
-        jdbc.update(RoomDaoSqls.UPDATE_ROOM_DATA_WITH_ROOM_PK,sqlParameterSource,keyHolder);
-        return keyHolder.getKey().intValue();
+        try {
+            jdbc.update(RoomDaoSqls.UPDATE_ROOM_DATA_WITH_ROOM_PK,sqlParameterSource,keyHolder);
+            return 1;
+        } catch (Exception e) {
+            System.out.println(e);
+            return 0;
+        }
     }
 
     public static int deleteRoomWithRoomPk(int room_pk) {

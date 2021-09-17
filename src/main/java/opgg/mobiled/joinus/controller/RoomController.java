@@ -15,6 +15,7 @@ import java.util.List;
 
 import opgg.mobiled.joinus.service.RoomService;
 import opgg.mobiled.joinus.dto.Room;
+import opgg.mobiled.joinus.dto.OnlyRoom;
 
 @RestController
 @RequestMapping(path = "/api/room")
@@ -46,7 +47,7 @@ public class RoomController {
 
     @PutMapping
     @ApiOperation(value = "방 수정", notes = "수정할 방에 대한 정보 넘겨주시면 됩니다. pk값으로 해당 방을 찾습니다.")
-    public int updateRoomWithRoomData(@Parameter(description = "수정할 방에 대한 정보를 주시면 됩니다. pk값으로 수정할 대상을 찾습니다", required = true) @RequestBody Room room) {
+    public int updateRoomWithRoomData(@Parameter(description = "수정할 방에 대한 정보를 주시면 됩니다. pk값으로 수정할 대상을 찾습니다", required = true) @RequestBody OnlyRoom room) {
         int updateResult = roomService.updateRoomWithRoomData(room);
 
         return updateResult;
